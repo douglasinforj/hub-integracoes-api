@@ -1,0 +1,2 @@
+viacep:
+  base-url: https://viacep.com.br/ws/{cep}/json/
