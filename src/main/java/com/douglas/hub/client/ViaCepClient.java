@@ -1,3 +1,4 @@
+// client/ViaCepClient.java
 package com.douglas.hub.client;
 
 import com.douglas.hub.dto.EnderecoDTO;
@@ -10,14 +11,15 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class ViaCepClient {
 
-    // Lê do application.yml — não precisa mais mexer no código para trocar a URL
-    @Value("${viacep.base-url}")
-    private String baseUrl;
-
     private final RestTemplate restTemplate;
+    private final String baseUrl;  // final + construtor
 
-    public ViaCepClient(RestTemplate restTemplate) {  // DI por construtor
+    public ViaCepClient(
+            RestTemplate restTemplate,
+            @Value("${viacep.base-url}") String baseUrl  //@Value no construtor
+    ) {
         this.restTemplate = restTemplate;
+        this.baseUrl = baseUrl;
     }
 
     public EnderecoDTO buscarEndereco(String cep) {
@@ -25,13 +27,13 @@ public class ViaCepClient {
             EnderecoDTO endereco = restTemplate.getForObject(baseUrl, EnderecoDTO.class, cep);
 
             if (endereco == null || Boolean.TRUE.equals(endereco.erro())) {
-                throw new CepNotFoundException("CEP não encontrado: " + cep);     //Exception personalizar para criar
+                throw new CepNotFoundException("CEP não encontrado: " + cep);
             }
 
             return endereco;
 
         } catch (HttpClientErrorException e) {
-            throw new CepNotFoundException("CEP inválido ou não encontrado: " + cep);   //Exception personalizar para criar
+            throw new CepNotFoundException("CEP inválido ou não encontrado: " + cep);
         }
     }
 }
