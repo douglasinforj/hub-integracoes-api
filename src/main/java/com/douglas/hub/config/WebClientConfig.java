@@ -8,14 +8,18 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Configuration
 public class WebClientConfig {
 
-    @Value("${weather.base-url}")
-    private String weatherBaseUrl;
+    private final String weatherBaseUrl;
+
+    public WebClientConfig(@Value("${weather.base-url}") String weatherBaseUrl) {
+        this.weatherBaseUrl = weatherBaseUrl;
+        //log teste
+        System.out.println(">>> WebClientConfig | baseUrl: " + weatherBaseUrl);
+    }
 
     @Bean
     public WebClient weatherWebClient() {
         return WebClient.builder()
                 .baseUrl(weatherBaseUrl)
-                // defaultHeader: todo request já vai com Accept: application/json
                 .defaultHeader("Accept", "application/json")
                 .build();
     }
