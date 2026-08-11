@@ -20,7 +20,7 @@ public class EnderecoController {
     }
 
     @GetMapping("/{cep}")
-    public ResponseEntity<EnderecoDTO>buscarEndereco(@PathVariable String cep) {
+    public ResponseEntity<EnderecoDTO>buscarEndereco(@PathVariable("cep") String cep) {
         EnderecoDTO endereco = viaCepClient.buscarEndereco(cep);
         return ResponseEntity.ok(endereco);
     }

@@ -33,7 +33,7 @@ public class ClimaController {
      */
 
     @GetMapping("/{cidade}")   //Mapeia requisições HTTP GET no caminho
-    public Mono<ResponseEntity<ClimaDTO>> buscarClima(@PathVariable String cidade) {  
+    public Mono<ResponseEntity<ClimaDTO>> buscarClima(@PathVariable("cidade") String cidade) {  
         /*
         .map(ResponseEntity::ok): Caso a busca no weatherClient ocorra com sucesso, 
         envolve o ClimaDTO retornado em um ResponseEntity com status HTTP 200 OK.
