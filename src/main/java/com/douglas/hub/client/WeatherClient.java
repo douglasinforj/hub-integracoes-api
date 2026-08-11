@@ -11,12 +11,12 @@ import reactor.core.publisher.Mono;
 public class WeatherClient {
 
     private final WebClient weatherWebClient;
+    private final String apiKey;
 
-    @Value("${weather.api-key}")
-    private String apiKey;
 
-    public WeatherClient(WebClient weatherWebClient) {
+    public WeatherClient(WebClient weatherWebClient, @Value("${weather.api-key}") String apiKey){
         this.weatherWebClient = weatherWebClient;
+        this.apiKey = apiKey;
     }
 
     public Mono<ClimaDTO> buscarClima(String cidade) {
